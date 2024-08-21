@@ -1,0 +1,24 @@
+file: .pre-commit-config.yaml
+
+repos:
+    - repo: https://github.com/psf/black
+      rev: 24.8 # replace with any tag/version under https://github.com/psf/black/tags
+      hooks:
+        - id: black
+          language_version: python3 # needs to be a command that runs python3.6+
+
+file: .github/workflows/black.yml
+
+name: Lint
+
+on: [push, pull request]
+
+jobs:
+  lint: 
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+      - uses: psf/black@stable
+        with:
+          args: ". --check"
